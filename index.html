@@ -1,0 +1,171 @@
+---
+layout: default
+title: Experience Log
+---
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HERO / MASTHEAD
+════════════════════════════════════════════════════════════════ -->
+<section class="tile-pattern" style="background: linear-gradient(180deg, var(--c-surface) 0%, var(--c-bg) 60%); border-bottom: 1px solid var(--c-border); padding: 3.5rem 0 3rem;">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+
+      <!-- Left: Title block -->
+      <div>
+        <div class="fade-in" style="font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--c-cream-f); margin-bottom:0.75rem;">
+          ⛀ Riichi Mahjong &nbsp;·&nbsp; {{ site.data.stats.platform }}
+        </div>
+        <h1 class="fade-in" style="font-family:'Playfair Display',serif; font-size:clamp(2rem,6vw,3.5rem); font-weight:900; line-height:1.05; letter-spacing:-0.03em; color:var(--c-cream);">
+          Experience<br/>
+          <span style="color:var(--c-riichi);">Log.</span>
+        </h1>
+        <p class="fade-in-delay-1 mt-3" style="font-size:1rem; color:var(--c-cream-m); max-width:40ch; line-height:1.6; font-style:italic;">
+          Game-by-game records from the midnight parlor — hands dissected, mistakes confessed, beauty celebrated.
+        </p>
+      </div>
+
+      <!-- Right: Stats snapshot -->
+      <div class="fade-in-delay-2 flex-shrink-0" style="background: var(--c-card); border: 1px solid var(--c-border); border-radius: 6px; padding: 1.25rem 1.5rem; min-width: 200px;">
+        <div style="font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--c-cream-f); margin-bottom:0.75rem;">
+          Current Status
+        </div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--c-riichi); line-height:1;">
+          {{ site.data.stats.rank }}
+        </div>
+        <div style="font-family:'DM Mono',monospace; font-size:0.75rem; color:var(--c-cream-m); margin-top:0.4rem;">
+          {{ site.data.stats.total_games }} games played
+        </div>
+        <div class="flex gap-4 mt-3" style="font-family:'DM Mono',monospace; font-size:0.72rem;">
+          <div>
+            <div style="color:var(--c-cream-f); font-size:0.62rem; text-transform:uppercase; letter-spacing:0.1em;">1st%</div>
+            <div style="color:var(--c-bamboo);">{{ site.data.stats.first_rate }}</div>
+          </div>
+          <div>
+            <div style="color:var(--c-cream-f); font-size:0.62rem; text-transform:uppercase; letter-spacing:0.1em;">Win%</div>
+            <div style="color:var(--c-cream);">{{ site.data.stats.win_rate }}</div>
+          </div>
+          <div>
+            <div style="color:var(--c-cream-f); font-size:0.62rem; text-transform:uppercase; letter-spacing:0.1em;">Deal-in</div>
+            <div style="color:var(--c-dora);">{{ site.data.stats.deal_in_rate }}</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     POST FEED
+════════════════════════════════════════════════════════════════ -->
+<section class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+
+  <div class="section-divider fade-in-delay-1">
+    <span>Recent Sessions</span>
+  </div>
+
+  {% if site.posts.size == 0 %}
+    <div style="text-align:center; padding:4rem 0; color:var(--c-cream-f);">
+      <div style="font-size:3rem; margin-bottom:1rem;">🀄</div>
+      <p style="font-family:'DM Mono',monospace; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase;">
+        No logs yet. The parlor awaits.
+      </p>
+    </div>
+  {% endif %}
+
+  <div class="space-y-5">
+    {% for post in site.posts %}
+    <article class="post-card fade-in" style="animation-delay: {{ forloop.index | times: 0.07 }}s; opacity:0; animation-fill-mode:forwards;">
+      <a href="{{ post.url | relative_url }}" class="block p-5 sm:p-6">
+        <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+
+          <!-- Left: Date tile -->
+          <div class="flex-shrink-0 hidden sm:flex flex-col items-center justify-center" style="width:56px; height:64px; background:var(--c-surface); border:1px solid var(--c-border); border-radius:4px; font-family:'DM Mono',monospace;">
+            <div style="font-size:1.2rem; font-weight:500; color:var(--c-riichi); line-height:1;">
+              {{ post.date | date: "%-d" }}
+            </div>
+            <div style="font-size:0.55rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--c-cream-f); margin-top:2px;">
+              {{ post.date | date: "%b %Y" }}
+            </div>
+          </div>
+
+          <!-- Right: Content -->
+          <div class="flex-1 min-w-0">
+            <!-- Tags row -->
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <!-- Mobile date -->
+              <span class="sm:hidden" style="font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--c-cream-f);">
+                {{ post.date | date: "%b %-d, %Y" }}
+              </span>
+              {% if post.result %}
+                <span class="tag-pill {% if post.result == '1st' or post.result == 'Win' %}tag-dora{% endif %}" style="{% if post.result == '1st' or post.result == 'Win' %}border-color:var(--c-riichi);color:var(--c-riichi);{% endif %}">
+                  {{ post.result }}
+                </span>
+              {% endif %}
+              {% for tag in post.tags limit:3 %}
+                <span class="tag-pill">{{ tag }}</span>
+              {% endfor %}
+            </div>
+
+            <!-- Title -->
+            <h2 style="font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--c-cream); line-height:1.3; letter-spacing:-0.01em;" class="group-hover:text-riichi">
+              {{ post.title }}
+            </h2>
+
+            <!-- Excerpt -->
+            {% if post.subtitle %}
+              <p style="font-size:0.9rem; color:var(--c-cream-m); margin-top:0.4rem; font-style:italic; line-height:1.55;">
+                {{ post.subtitle }}
+              </p>
+            {% elsif post.excerpt %}
+              <p style="font-size:0.9rem; color:var(--c-cream-m); margin-top:0.4rem; line-height:1.55;">
+                {{ post.excerpt | strip_html | truncate: 140 }}
+              </p>
+            {% endif %}
+
+            <!-- Bottom meta -->
+            <div class="flex items-center gap-4 mt-3" style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--c-cream-f);">
+              {% if post.platform %}
+                <span>{{ post.platform }}</span>
+                <span style="color:var(--c-border);">·</span>
+              {% endif %}
+              {% if post.final_score %}
+                <span style="color:{% if post.final_score > 0 %}var(--c-bamboo){% else %}var(--c-dora){% endif %};">
+                  {{ post.final_score | prepend: "+" }}
+                </span>
+                <span style="color:var(--c-border);">·</span>
+              {% endif %}
+              <span>{{ post.content | number_of_words }} words</span>
+              <span style="margin-left:auto; color:var(--c-riichi);">Read →</span>
+            </div>
+          </div>
+
+        </div>
+      </a>
+    </article>
+    {% endfor %}
+  </div>
+
+  <!-- ── Milestones sidebar-style strip ──────────────────────────── -->
+  {% if site.data.stats.milestones.size > 0 %}
+  <div class="mt-12">
+    <div class="section-divider">
+      <span>Milestones</span>
+    </div>
+    <div class="space-y-2">
+      {% for m in site.data.stats.milestones %}
+      <div style="display:flex; align-items:baseline; gap:1rem; padding:0.75rem 0; border-bottom:1px solid var(--c-border);">
+        <span style="font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--c-cream-f); flex-shrink:0; letter-spacing:0.06em;">
+          {{ m.date | date: "%b %Y" }}
+        </span>
+        <span style="font-size:0.9rem; color:var(--c-cream-m);">{{ m.event }}</span>
+        {% if m.hand %}
+          <span class="tag-pill" style="margin-left:auto; flex-shrink:0;">{{ m.hand }}</span>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+</section>

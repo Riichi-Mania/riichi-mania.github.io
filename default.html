@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#121212" />
+
+  <title>
+    {% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}
+  </title>
+  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | truncate: 160 }}" />
+
+  <!-- ── Fonts ─────────────────────────────────────────────────────── -->
+  <!-- Playfair Display: elegant serif for headings -->
+  <!-- DM Mono: technical feel for stats & notation -->
+  <!-- Lora: warm, readable body text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- ── Tailwind CSS Play CDN ────────────────────────────────────── -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'parlor': {
+              bg:       '#121212',
+              surface:  '#1a1a1a',
+              card:     '#1f1f1f',
+              border:   '#2a2a2a',
+              muted:    '#3a3a3a',
+            },
+            'cream': {
+              DEFAULT:  '#f5edd6',
+              muted:    '#c4b99a',
+              faint:    '#7a7062',
+            },
+            'dora':    '#e11d48',   // Dora Red
+            'riichi':  '#fbbf24',  // Riichi Yellow
+            'bamboo':  '#4ade80',  // Bamboo Green
+            'sky':     '#38bdf8',  // Pinzu Blue
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'Georgia', 'serif'],
+            body:    ['Lora', 'Georgia', 'serif'],
+            mono:    ['"DM Mono"', '"Fira Mono"', 'monospace'],
+          },
+          backgroundImage: {
+            'tile-pattern': "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- ── Global Styles ─────────────────────────────────────────────── -->
+  <style>
+    /* Base resets & custom properties */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --c-bg:        #121212;
+      --c-surface:   #1a1a1a;
+      --c-card:      #1f1f1f;
+      --c-border:    #2a2a2a;
+      --c-cream:     #f5edd6;
+      --c-cream-m:   #c4b99a;
+      --c-cream-f:   #7a7062;
+      --c-dora:      #e11d48;
+      --c-riichi:    #fbbf24;
+      --c-bamboo:    #4ade80;
+      scroll-behavior: smooth;
+    }
+
+    html { background: var(--c-bg); }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background-color: var(--c-bg);
+      color: var(--c-cream);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--c-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--c-dora); }
+
+    /* Selection */
+    ::selection { background: var(--c-dora); color: white; }
+
+    /* ── Navigation ──────────────────────────────────────────────── */
+    .nav-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-cream-m);
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--c-riichi); }
+
+    /* ── Rank badge ──────────────────────────────────────────────── */
+    .rank-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--c-riichi);
+      color: var(--c-riichi);
+      padding: 2px 10px;
+      border-radius: 2px;
+    }
+
+    /* ── Post cards on index ─────────────────────────────────────── */
+    .post-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: 6px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+      position: relative;
+    }
+    .post-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--c-dora), var(--c-riichi));
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .post-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--c-muted, #3a3a3a);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .post-card:hover::before { opacity: 1; }
+
+    /* ── Tag pills ───────────────────────────────────────────────── */
+    .tag-pill {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 2px;
+      border: 1px solid var(--c-border);
+      color: var(--c-cream-m);
+      background: transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tag-pill:hover { border-color: var(--c-riichi); color: var(--c-riichi); }
+    .tag-pill.tag-dora { border-color: var(--c-dora); color: var(--c-dora); }
+
+    /* ── Stat grid (sidebar & footer) ───────────────────────────── */
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--c-border);
+      font-size: 0.85rem;
+    }
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--c-cream-f);
+    }
+    .stat-value {
+      font-family: 'DM Mono', monospace;
+      font-weight: 500;
+      color: var(--c-cream);
+    }
+    .stat-value.accent-dora  { color: var(--c-dora); }
+    .stat-value.accent-riichi { color: var(--c-riichi); }
+    .stat-value.accent-bamboo { color: var(--c-bamboo); }
+
+    /* ── Horizontal divider with kanji ──────────────────────────── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--c-cream-f);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin: 2.5rem 0;
+    }
+    .section-divider::before, .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--c-border);
+    }
+
+    /* ── Prose — post body text ──────────────────────────────────── */
+    .prose {
+      color: var(--c-cream);
+      line-height: 1.85;
+      font-size: 1.05rem;
+    }
+    .prose h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--c-cream);
+      margin: 2.5rem 0 1rem;
+      letter-spacing: -0.01em;
+    }
+    .prose h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--c-cream-m);
+      margin: 2rem 0 0.75rem;
+    }
+    .prose p { margin: 1.25rem 0; }
+    .prose a { color: var(--c-riichi); text-decoration: underline; text-underline-offset: 3px; }
+    .prose a:hover { color: var(--c-dora); }
+    .prose strong { color: white; font-weight: 600; }
+    .prose em { font-style: italic; color: var(--c-cream-m); }
+    .prose blockquote {
+      border-left: 3px solid var(--c-dora);
+      padding-left: 1.25rem;
+      margin: 1.5rem 0;
+      color: var(--c-cream-m);
+      font-style: italic;
+    }
+    .prose ul { list-style: none; padding: 0; }
+    .prose ul li { padding: 0.25rem 0; padding-left: 1.25rem; position: relative; }
+    .prose ul li::before {
+      content: '⛀';
+      position: absolute;
+      left: 0;
+      color: var(--c-riichi);
+      font-size: 0.8em;
+    }
+    .prose ol { padding-left: 1.5rem; }
+    .prose ol li { padding: 0.2rem 0; }
+    .prose code {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.88em;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 3px;
+      padding: 1px 6px;
+      color: var(--c-riichi);
+    }
+    .prose pre {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 6px;
+      padding: 1.25rem;
+      overflow-x: auto;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9em;
+      line-height: 1.6;
+    }
+    .prose pre code {
+      background: transparent;
+      border: none;
+      padding: 0;
+      color: var(--c-cream);
+    }
+    .prose hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 2.5rem 0;
+    }
+
+    /* ── Hand display block ──────────────────────────────────────── */
+    .hand-display {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-left: 3px solid var(--c-riichi);
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--c-cream-m);
+    }
+    .hand-display .hand-label {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-cream-f);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid var(--c-border);
+      padding: 2rem 0;
+      color: var(--c-cream-f);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Page fade-in ────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeUp 0.5s ease forwards; }
+    .fade-in-delay-1 { animation-delay: 0.1s; opacity: 0; animation-fill-mode: forwards; }
+    .fade-in-delay-2 { animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards; }
+    .fade-in-delay-3 { animation-delay: 0.3s; opacity: 0; animation-fill-mode: forwards; }
+  </style>
+
+  {% seo %}
+</head>
+<body class="bg-parlor-bg text-cream font-body">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       NAVIGATION
+  ════════════════════════════════════════════════════════════════ -->
+  <header class="sticky top-0 z-50" style="background: rgba(18,18,18,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--c-border);">
+    <nav class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <!-- Logo / Site Title -->
+      <a href="{{ '/' | relative_url }}" class="flex items-center gap-3 group">
+        <span style="font-size: 1.5rem; line-height:1;" aria-hidden="true">🀄</span>
+        <span style="font-family:'Playfair Display',serif; font-weight:700; font-size:1.1rem; color:var(--c-cream); letter-spacing:-0.01em;" class="group-hover:text-riichi transition-colors duration-200">
+          {{ site.title }}
+        </span>
+      </a>
+
+      <!-- Nav links + rank -->
+      <div class="flex items-center gap-5">
+        <a href="{{ '/' | relative_url }}" class="nav-link hidden sm:block">Log</a>
+        <a href="{{ '/about' | relative_url }}" class="nav-link hidden sm:block">About</a>
+        <span class="rank-badge">{{ site.data.stats.rank }}</span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MAIN CONTENT
+  ════════════════════════════════════════════════════════════════ -->
+  <main id="main-content">
+    {{ content }}
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <span>{{ site.title }} &mdash; {{ site.description }}</span>
+      <span style="color:var(--c-border);">
+        ⛀ Built with Jekyll &amp; obsession &nbsp;·&nbsp;
+        <a href="https://github.com/{{ site.github_username }}" style="color:var(--c-cream-f); text-decoration:underline;" class="hover:text-riichi transition-colors">GitHub</a>
+      </span>
+    </div>
+  </footer>
+
+  <!-- ── Tile Renderer ─────────────────────────────────────────── -->
+  <script src="{{ '/assets/js/tiles.js' | relative_url }}"></script>
+
+</body>
+</html>

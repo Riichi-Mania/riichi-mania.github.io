@@ -1,0 +1,205 @@
+---
+layout: default
+---
+
+<!-- Post header -->
+<div style="background: linear-gradient(180deg, var(--c-surface) 0%, var(--c-bg) 100%); border-bottom: 1px solid var(--c-border);" class="tile-pattern">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-12 pb-10">
+
+    <!-- Tags -->
+    <div class="flex flex-wrap gap-2 mb-5 fade-in">
+      {% if page.result %}
+        {% assign result_lower = page.result | downcase %}
+        {% if result_lower == "win" or result_lower == "1st" %}
+          <span class="tag-pill tag-dora">{{ page.result }}</span>
+        {% else %}
+          <span class="tag-pill">{{ page.result }}</span>
+        {% endif %}
+      {% endif %}
+      {% for tag in page.tags %}
+        <span class="tag-pill">{{ tag }}</span>
+      {% endfor %}
+    </div>
+
+    <!-- Title -->
+    <h1 class="fade-in" style="font-family:'Playfair Display',serif; font-size:clamp(1.75rem,5vw,2.75rem); font-weight:900; line-height:1.15; letter-spacing:-0.02em; color:var(--c-cream); max-width: 32ch;">
+      {{ page.title }}
+    </h1>
+
+    <!-- Subtitle / excerpt -->
+    {% if page.subtitle %}
+    <p class="mt-4 fade-in-delay-1" style="font-size:1.1rem; color:var(--c-cream-m); font-style:italic; max-width:50ch;">
+      {{ page.subtitle }}
+    </p>
+    {% endif %}
+
+    <!-- Meta -->
+    <div class="flex flex-wrap items-center gap-4 mt-6 fade-in-delay-2" style="font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--c-cream-f);">
+      <span>{{ page.date | date: "%B %-d, %Y" }}</span>
+      {% if page.hanchan %}
+        <span style="color:var(--c-border);">·</span>
+        <span>Hanchan #{{ page.hanchan }}</span>
+      {% endif %}
+      {% if page.platform %}
+        <span style="color:var(--c-border);">·</span>
+        <span>{{ page.platform }}</span>
+      {% endif %}
+      <span style="color:var(--c-border);">·</span>
+      <span>{{ content | number_of_words }} words</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────────────────
+     BODY: two-column layout on tablet+ (article + sidebar)
+──────────────────────────────────────────────────────────────────── -->
+<div class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+  <div class="flex flex-col lg:flex-row gap-10">
+
+    <!-- ── ARTICLE ──────────────────────────────────────────────── -->
+    <article class="flex-1 min-w-0 fade-in-delay-1">
+      <div class="prose post-content">
+        {{ content }}
+      </div>
+
+      <!-- Tags footer -->
+      {% if page.tags.size > 0 %}
+      <div class="mt-10 pt-6" style="border-top: 1px solid var(--c-border);">
+        <span class="stat-label">Topics</span>
+        <div class="flex flex-wrap gap-2 mt-3">
+          {% for tag in page.tags %}
+            <span class="tag-pill">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Post navigation -->
+      <nav class="mt-10 flex justify-between gap-4" style="border-top: 1px solid var(--c-border); padding-top: 1.5rem;">
+        {% if page.previous.url %}
+          <a href="{{ page.previous.url | relative_url }}" class="group flex-1" style="max-width: 48%;">
+            <div class="stat-label mb-1">← Previous Log</div>
+            <div style="font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--c-cream-m); line-height:1.3;" class="group-hover:text-riichi transition-colors duration-200">
+              {{ page.previous.title }}
+            </div>
+          </a>
+        {% else %}
+          <div></div>
+        {% endif %}
+        {% if page.next.url %}
+          <a href="{{ page.next.url | relative_url }}" class="group flex-1 text-right" style="max-width: 48%;">
+            <div class="stat-label mb-1">Next Log →</div>
+            <div style="font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--c-cream-m); line-height:1.3;" class="group-hover:text-riichi transition-colors duration-200">
+              {{ page.next.title }}
+            </div>
+          </a>
+        {% else %}
+          <div></div>
+        {% endif %}
+      </nav>
+    </article>
+
+    <!-- ── SIDEBAR ───────────────────────────────────────────────── -->
+    <aside class="lg:w-64 flex-shrink-0">
+      <div class="sticky top-24 space-y-6">
+
+        <!-- Game Stats Card -->
+        <div class="post-card p-5">
+          <div class="section-divider" style="margin: 0 0 1rem;">Game Stats</div>
+
+          {% if page.result %}
+          <div class="stat-row">
+            <span class="stat-label">Result</span>
+            <span class="stat-value {% if page.result == '1st' or page.result == 'Win' %}accent-riichi{% elsif page.result == '4th' or page.result == 'Chombo' %}accent-dora{% endif %}">
+              {{ page.result }}
+            </span>
+          </div>
+          {% endif %}
+
+          {% if page.final_score %}
+          <div class="stat-row">
+            <span class="stat-label">Score</span>
+            <span class="stat-value {% if page.final_score > 0 %}accent-bamboo{% else %}accent-dora{% endif %}">
+              {{ page.final_score | prepend: "+" }}
+            </span>
+          </div>
+          {% endif %}
+
+          {% if page.uma %}
+          <div class="stat-row">
+            <span class="stat-label">Uma</span>
+            <span class="stat-value {% if page.uma > 0 %}accent-bamboo{% else %}accent-dora{% endif %}">
+              {{ page.uma | prepend: "+" }}
+            </span>
+          </div>
+          {% endif %}
+
+          {% if page.win_count %}
+          <div class="stat-row">
+            <span class="stat-label">Wins</span>
+            <span class="stat-value">{{ page.win_count }}</span>
+          </div>
+          {% endif %}
+
+          {% if page.deal_ins %}
+          <div class="stat-row">
+            <span class="stat-label">Deal-ins</span>
+            <span class="stat-value accent-dora">{{ page.deal_ins }}</span>
+          </div>
+          {% endif %}
+
+          {% if page.platform %}
+          <div class="stat-row">
+            <span class="stat-label">Platform</span>
+            <span class="stat-value" style="font-size:0.8rem;">{{ page.platform }}</span>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Player Profile Card -->
+        <div class="post-card p-5">
+          <div class="section-divider" style="margin: 0 0 1rem;">Player</div>
+
+          <div class="stat-row">
+            <span class="stat-label">Rank</span>
+            <span class="stat-value accent-riichi">{{ site.data.stats.rank }}</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">1st Rate</span>
+            <span class="stat-value">{{ site.data.stats.first_rate }}%</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Win Rate</span>
+            <span class="stat-value">{{ site.data.stats.win_rate }}%</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Deal-in</span>
+            <span class="stat-value accent-dora">{{ site.data.stats.deal_in_rate }}%</span>
+          </div>
+          <div class="stat-row" style="border:none;">
+            <span class="stat-label">Games</span>
+            <span class="stat-value">{{ site.data.stats.total_games }}</span>
+          </div>
+
+          <!-- Signature Yaku -->
+          <div class="mt-4 pt-3" style="border-top: 1px solid var(--c-border);">
+            <div class="stat-label mb-2">Signature Yaku</div>
+            <div class="flex flex-wrap gap-2">
+              {% for yaku in site.data.stats.signature_yaku %}
+                <span class="tag-pill">{{ yaku.icon }} {{ yaku.name }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Back to log -->
+        <a href="{{ '/' | relative_url }}" class="block post-card p-4 text-center" style="font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--c-cream-m);">
+          ← All Logs
+        </a>
+
+      </div>
+    </aside>
+
+  </div>
+</div>

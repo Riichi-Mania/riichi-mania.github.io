@@ -1,0 +1,42 @@
+# ─────────────────────────────────────────────
+#  Central Stats File — edit here, updates everywhere
+# ─────────────────────────────────────────────
+
+player: "Your Name"
+platform: "Mahjong Soul"        # or "Tenhou", "RiichiCity", etc.
+
+# Current rank — change this single value to update the whole site
+rank: "Jade ✦✦✦"
+rank_short: "Jade"
+
+# Running totals (update after each session)
+total_games: 47
+total_hanchan: 38
+total_tonpuusen: 9
+
+# Win rates (as percentages, no % sign)
+first_rate: 28.4          # 1st place %
+second_rate: 24.1
+third_rate: 27.7
+fourth_rate: 19.8         # avoid rate
+win_rate: 21.3            # tsumo + ron per game
+deal_in_rate: 11.6
+
+# Favourite yaku (for sidebar display)
+signature_yaku:
+  - name: "Tanyao"
+    icon: "🀄"
+  - name: "Pinfu"
+    icon: "🎴"
+  - name: "Riichi"
+    icon: "⚡"
+
+# Milestones / achievements
+milestones:
+  - date: "2026-04-12"
+    event: "First Haneman"
+    hand: "Honitsu + Riichi + Ippatsu"
+  - date: "2026-03-01"
+    event: "Promoted to Jade"
+  - date: "2026-02-14"
+    event: "First online game"

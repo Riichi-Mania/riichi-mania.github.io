@@ -1,0 +1,45 @@
+title: "牌局 Haipai"
+description: "A Riichi Mahjong experience log. Games, ranks, and hand reviews from the parlor floor."
+author: "Your Name"
+email: ""
+url: "" # e.g. https://yourusername.github.io
+baseurl: "" # e.g. /midnight-parlor (if not root repo)
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /log/:year/:month/:day/:title/
+
+# Plugins (GitHub Pages safe)
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  posts:
+    output: true
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Your Name"
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - README.md
+  - .git
+
+# Kramdown config
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: "highlight"
