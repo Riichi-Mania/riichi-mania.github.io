@@ -20,7 +20,9 @@ title: Experience Log
           <span style="color:var(--c-riichi);">Mahjong?</span>
         </h1>
         <p class="fade-in-delay-1 mt-3" style="font-size:1rem; color:var(--c-cream-m); max-width:50ch; line-height:1.6;">
-          A game where strategy meets chance, intuition reads the table, and a single tile can change everything. Riichi mahjong rewards pattern recognition, psychological depth, and the beautiful mathematics of probability. Every hand tells a story.
+          A four-player game of incomplete information where probability, psychology,
+          and pattern recognition collide. Every draw changes the calculation.
+          Every discard is a tell.
         </p>
       </div>
 
@@ -54,6 +56,92 @@ title: Experience Log
     </div>
   </div>
 </section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     WHY RIICHI — MANIFESTO + PILLARS
+════════════════════════════════════════════════════════════════ -->
+<section class="max-w-4xl mx-auto px-4 sm:px-6 pt-10 pb-4">
+
+  <!-- Manifesto block -->
+  <div class="fade-in" style="border-left: 2px solid var(--c-riichi); padding: 1.1rem 1.4rem; background: var(--c-card); border-radius: 0 6px 6px 0; margin-bottom: 2.5rem;">
+    <p style="font-family:'Playfair Display',serif; font-size:0.98rem; color:var(--c-cream-m); line-height:1.75;">
+      Chess gives you perfect information. Poker gives you hidden cards but only one opponent.
+      Riichi mahjong gives you three opponents, a wall of 136 tiles, and the knowledge that
+      every tile anyone discards tells you exactly what <em>not</em> to be afraid of —
+      and hints at what you should be.
+    </p>
+    <p style="font-family:'Playfair Display',serif; font-size:0.98rem; color:var(--c-cream-m); line-height:1.75; margin-top:0.85rem;">
+      It rewards both the mathematician and the detective. You build hands toward scoring
+      combinations called <em>yaku</em>, manage your risk of dealing into an opponent's win,
+      and read the discards to model what the table is holding. No two hands play the same way.
+    </p>
+  </div>
+
+  <!-- Four pillars grid -->
+  <div class="section-divider fade-in">
+    <span>What keeps it interesting</span>
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
+
+    <div class="fade-in" style="background:var(--c-card); border:1px solid var(--c-border); border-radius:6px; padding:1rem 1.1rem;">
+      <div style="font-size:1.2rem; color:var(--c-riichi); margin-bottom:0.5rem;">∫</div>
+      <div style="font-family:'DM Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--c-cream); margin-bottom:0.35rem;">Probability</div>
+      <p style="font-size:0.8rem; color:var(--c-cream-m); line-height:1.55;">
+        Tile counts are public. You can calculate draw odds in real time — then feel them
+        disagree with the wall.
+      </p>
+    </div>
+
+    <div class="fade-in-delay-1" style="background:var(--c-card); border:1px solid var(--c-border); border-radius:6px; padding:1rem 1.1rem;">
+      <div style="font-size:1.2rem; color:var(--c-riichi); margin-bottom:0.5rem;">◎</div>
+      <div style="font-family:'DM Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--c-cream); margin-bottom:0.35rem;">Discard reading</div>
+      <p style="font-size:0.8rem; color:var(--c-cream-m); line-height:1.55;">
+        Every discard is a clue. Build a mental model of each hand and avoid the tiles
+        that will pay them out.
+      </p>
+    </div>
+
+    <div class="fade-in-delay-2" style="background:var(--c-card); border:1px solid var(--c-border); border-radius:6px; padding:1rem 1.1rem;">
+      <div style="font-size:1.2rem; color:var(--c-riichi); margin-bottom:0.5rem;">⚑</div>
+      <div style="font-family:'DM Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--c-cream); margin-bottom:0.35rem;">The declaration</div>
+      <p style="font-size:0.8rem; color:var(--c-cream-m); line-height:1.55;">
+        Lock your hand. Stake 1,000 points. Signal to the table: <em>I'm ready.</em>
+        A gamble, a statement, a pressure play.
+      </p>
+    </div>
+
+    <div class="fade-in-delay-3" style="background:var(--c-card); border:1px solid var(--c-border); border-radius:6px; padding:1rem 1.1rem;">
+      <div style="font-size:1.2rem; color:var(--c-riichi); margin-bottom:0.5rem;">⟳</div>
+      <div style="font-family:'DM Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--c-cream); margin-bottom:0.35rem;">Variance</div>
+      <p style="font-size:0.8rem; color:var(--c-cream-m); line-height:1.55;">
+        Even strong players lose sessions. The measure is decision quality across
+        thousands of hands — not any single result.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Hand flow strip -->
+  <div class="section-divider fade-in mt-10">
+    <span>A hand in four acts</span>
+  </div>
+
+  <div class="fade-in mt-4" style="display:flex; border:1px solid var(--c-border); border-radius:6px; overflow:hidden;">
+    {% assign acts = "Deal,Build,Decide,Win or learn" | split: "," %}
+    {% assign act_subs = "13 tiles. Assess starting shape and target yaku.,Draw and discard. Close the distance to tenpai.,Push or fold? Read the table. Manage deal-in risk.,Agari — or study what the wall held." | split: "," %}
+    {% for act in acts %}
+    <div style="flex:1; padding:0.9rem 1rem; {% unless forloop.last %}border-right:1px solid var(--c-border);{% endunless %}">
+      <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; color:var(--c-riichi); margin-bottom:4px;">0{{ forloop.index }}</div>
+      <div style="font-family:'DM Mono',monospace; font-size:0.72rem; font-weight:500; color:var(--c-cream);">{{ act }}</div>
+      <div style="font-size:0.75rem; color:var(--c-cream-m); margin-top:3px; line-height:1.45;">{{ act_subs[forloop.index0] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+</section>
+
 
 <!-- ═══════════════════════════════════════════════════════════════
      POST FEED
