@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -62,16 +62,16 @@
     *, *::before, *::after { box-sizing: border-box; }
 
     :root {
-      --c-bg:        #121212;
-      --c-surface:   #1a1a1a;
-      --c-card:      #1f1f1f;
-      --c-border:    #2a2a2a;
-      --c-cream:     #f5edd6;
-      --c-cream-m:   #c4b99a;
-      --c-cream-f:   #7a7062;
+      --c-bg:        #ffffff;
+      --c-surface:   #f5f5f5;
+      --c-card:      #fafafa;
+      --c-border:    #e0e0e0;
+      --c-cream:     #1a1a1a;
+      --c-cream-m:   #4a4a4a;
+      --c-cream-f:   #7a7a7a;
       --c-dora:      #e11d48;
-      --c-riichi:    #fbbf24;
-      --c-bamboo:    #4ade80;
+      --c-riichi:    #d97706;
+      --c-bamboo:    #2d7a3a;
       scroll-behavior: smooth;
     }
 
@@ -321,12 +321,12 @@
 
   {% seo %}
 </head>
-<body class="bg-parlor-bg text-cream font-body">
+<body class="bg-white text-black font-body">
 
   <!-- ═══════════════════════════════════════════════════════════════
        NAVIGATION
   ════════════════════════════════════════════════════════════════ -->
-  <header class="sticky top-0 z-50" style="background: rgba(18,18,18,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--c-border);">
+  <header class="sticky top-0 z-50" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--c-border);">
     <nav class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
       <!-- Logo / Site Title -->
       <a href="{{ '/' | relative_url }}" class="flex items-center gap-3 group">
